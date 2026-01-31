@@ -181,6 +181,13 @@ test.describe('Suite Name', () => {
     // Test code here
   });
 
+  test('test case 2' , async({page}) => {
+    test.step('test step 1' , async ({page}) = {
+   });
+   test.step('test step 2' , async ({page}) = {
+   });
+  }); 
+
   // Runs after EACH test
   test.afterEach(async ({ page }) => {
     // Cleanup after every test
