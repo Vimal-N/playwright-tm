@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Tags Mastery for Test Automation Engineers</title>
+    <style>
+        :root { --primary: #2563eb; --secondary: #7c3aed; --success: #059669; --warning: #d97706; --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb; --gray-600: #4b5563; --gray-700: #374151; --gray-800: #1f2937; --gray-900: #111827; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.7; color: var(--gray-800); background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        header { text-align: center; padding: 3rem 2rem; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; border-radius: 1rem; margin-bottom: 2rem; }
+        header h1 { font-size: 2.2rem; margin-bottom: 1rem; }
+        header p { opacity: 0.9; max-width: 700px; margin: 0 auto; }
+        .toc { background: white; border-radius: 1rem; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .toc h2 { color: var(--primary); margin-bottom: 1rem; }
+        .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.75rem; }
+        .toc-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--gray-50); border-radius: 0.5rem; text-decoration: none; color: var(--gray-700); transition: all 0.2s; }
+        .toc-item:hover { background: var(--primary); color: white; }
+        .toc-num { width: 24px; height: 24px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; }
+        .toc-item:hover .toc-num { background: white; color: var(--primary); }
+        section { background: white; border-radius: 1rem; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        section h2 { color: var(--primary); font-size: 1.6rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid var(--primary); }
+        section h3 { color: var(--gray-800); font-size: 1.3rem; margin: 1.5rem 0 1rem 0; }
+        section h4 { color: var(--secondary); font-size: 1rem; margin: 1rem 0 0.5rem 0; }
+        p { margin-bottom: 0.75rem; }
+        .tag-card { background: var(--gray-50); border-left: 4px solid var(--primary); border-radius: 0.5rem; padding: 1.25rem; margin: 1rem 0; }
+        .tag-card.legacy { border-left-color: var(--warning); background: #fffbeb; }
+        .tag-card.semantic { border-left-color: var(--secondary); background: #f5f3ff; }
+        .tag-card.modern { border-left-color: var(--success); background: #ecfdf5; }
+        .tag-name { font-family: 'Consolas', monospace; font-size: 1.2rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.25rem; }
+        .tag-purpose { color: var(--gray-600); font-style: italic; margin-bottom: 0.75rem; font-size: 0.95rem; }
+        .code-block { background: var(--gray-900); color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; font-family: 'Consolas', monospace; font-size: 0.85rem; overflow-x: auto; margin: 0.75rem 0; white-space: pre-wrap; }
+        .code-block .tag { color: #7dd3fc; }
+        .code-block .attr { color: #fbbf24; }
+        .code-block .value { color: #86efac; }
+        .code-block .comment { color: #9ca3af; }
+        .pw-tip { background: linear-gradient(135deg, #dbeafe 0%, #ede9fe 100%); border-radius: 0.5rem; padding: 1rem; margin: 0.75rem 0; border: 1px solid #c7d2fe; }
+        .pw-tip h5 { color: #1d4ed8; font-size: 0.95rem; margin-bottom: 0.5rem; }
+        .pw-tip h5::before { content: "🎭 "; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+        th { background: var(--primary); color: white; padding: 0.75rem; text-align: left; }
+        td { padding: 0.75rem; border-bottom: 1px solid var(--gray-200); }
+        tr:nth-child(even) { background: var(--gray-50); }
+        .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 1rem; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
+        .badge-legacy { background: #fef3c7; color: #92400e; }
+        .badge-modern { background: #d1fae5; color: #065f46; }
+        .badge-semantic { background: #ede9fe; color: #5b21b6; }
+        .info-box { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 0.5rem; padding: 1rem; margin: 1rem 0; }
+        .info-box.warning { background: #fffbeb; border-color: #fcd34d; }
+        .info-box.success { background: #ecfdf5; border-color: #6ee7b7; }
+        .info-box h5 { font-weight: 600; margin-bottom: 0.5rem; }
+        ul, ol { margin: 0.75rem 0 0.75rem 1.5rem; }
+        li { margin-bottom: 0.35rem; }
+        .diagram { background: var(--gray-100); border: 2px dashed var(--gray-200); border-radius: 0.5rem; padding: 1rem; margin: 1rem 0; font-family: monospace; font-size: 0.8rem; white-space: pre; overflow-x: auto; }
+        .discuss { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 0.5rem; padding: 1rem; margin: 1rem 0; border-left: 4px solid var(--warning); }
+        .discuss h5 { color: #92400e; font-weight: 600; margin-bottom: 0.5rem; }
+        .discuss h5::before { content: "💡 "; }
+        .checklist { background: #f0fdf4; border-radius: 0.5rem; padding: 1rem; margin: 1rem 0; }
+        .checklist h5 { color: #166534; margin-bottom: 0.75rem; }
+        .checklist h5::before { content: "✅ "; }
+        .checklist ul { list-style: none; margin: 0; padding: 0; }
+        .checklist li { padding: 0.35rem 0 0.35rem 1.5rem; position: relative; }
+        .checklist li::before { content: "☐"; position: absolute; left: 0; }
+        footer { text-align: center; padding: 2rem; color: var(--gray-600); font-size: 0.85rem; }
+        @media print { body { background: white; } section { box-shadow: none; break-inside: avoid; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>HTML Tags Mastery for Test Automation Engineers</h1>
+        <p>A comprehensive guide to understanding HTML structure, tag purposes, and their implications for Playwright test automation and UI development discussions</p>
+    </header>
+
+    <nav class="toc">
+        <h2>📚 Table of Contents</h2>
+        <div class="toc-grid">
+            <a href="#s1" class="toc-item"><span class="toc-num">1</span>Document Structure</a>
+            <a href="#s2" class="toc-item"><span class="toc-num">2</span>Text & Typography</a>
+            <a href="#s3" class="toc-item"><span class="toc-num">3</span>Semantic Layout (Modern)</a>
+            <a href="#s4" class="toc-item"><span class="toc-num">4</span>Legacy Layout Patterns</a>
+            <a href="#s5" class="toc-item"><span class="toc-num">5</span>Form Elements</a>
+            <a href="#s6" class="toc-item"><span class="toc-num">6</span>Tables & Data</a>
+            <a href="#s7" class="toc-item"><span class="toc-num">7</span>Media & Embedded</a>
+            <a href="#s8" class="toc-item"><span class="toc-num">8</span>Interactive Elements</a>
+            <a href="#s9" class="toc-item"><span class="toc-num">9</span>Essential Attributes</a>
+            <a href="#s10" class="toc-item"><span class="toc-num">10</span>Playwright Locators</a>
+            <a href="#s11" class="toc-item"><span class="toc-num">11</span>Influencing Design</a>
+        </div>
+    </nav>
+
+    <!-- Section 1 -->
+    <section id="s1">
+        <h2>1. HTML Fundamentals & Document Structure</h2>
+        <p>Every web page is built on HTML. Understanding document structure helps you navigate the DOM efficiently during test automation.</p>
+        
+        <div class="code-block"><span class="comment">&lt;!-- Document Type Declaration --&gt;</span>
+<span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"en"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Page Title<span class="tag">&lt;/title&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+  <span class="tag">&lt;body&gt;</span>
+    <span class="comment">&lt;!-- All visible content --&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></div>
+
+        <div class="tag-card">
+            <div class="tag-name">&lt;!DOCTYPE html&gt;</div>
+            <div class="tag-purpose">Document Type Declaration</div>
+            <p><strong>Purpose:</strong> Tells browser to use HTML5 standards mode. Missing DOCTYPE causes quirks mode with inconsistent rendering.</p>
+        </div>
+
+        <div class="tag-card">
+            <div class="tag-name">&lt;html&gt;</div>
+            <div class="tag-purpose">Root Element</div>
+            <p><strong>Purpose:</strong> Root container. The <code>lang</code> attribute specifies document language for screen readers and localization.</p>
+        </div>
+
+        <div class="tag-card">
+            <div class="tag-name">&lt;head&gt;</div>
+            <div class="tag-purpose">Metadata Container</div>
+            <p><strong>Purpose:</strong> Contains metadata: charset, viewport, title, stylesheets. Not visible but <code>&lt;title&gt;</code> is testable.</p>
+        </div>
+
+        <div class="tag-card">
+            <div class="tag-name">&lt;body&gt;</div>
+            <div class="tag-purpose">Visible Content Container</div>
+            <p><strong>Purpose:</strong> Contains all visible page content. All UI testing happens here.</p>
+        </div>
+
+        <div class="pw-tip">
+            <h5>Playwright Usage</h5>
+            <div class="code-block"><span class="comment">// Get page title</span>
+const title = await page.title();
+
+<span class="comment">// Check language attribute</span>
+const lang = await page.locator('html').getAttribute('lang');</div>
+        </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section id="s2">
+        <h2>2. Text Content & Typography Tags</h2>
+        
+        <h3>Heading Tags (h1 - h6)</h3>
+        <div class="tag-card semantic">
+            <div class="tag-name">&lt;h1&gt; through &lt;h6&gt;</div>
+            <div class="tag-purpose">Content Hierarchy Headings</div>
+            <p><strong>Purpose:</strong> Define hierarchical structure. h1 = main title (unique per page), h2 = sections, h3-h6 = subsections.</p>
+            <div class="code-block"><span class="tag">&lt;h1&gt;</span>Main Page Title<span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;h2&gt;</span>Section<span class="tag">&lt;/h2&gt;</span>
+<span class="tag">&lt;h3&gt;</span>Subsection<span class="tag">&lt;/h3&gt;</span></div>
+            <div class="pw-tip">
+                <h5>Playwright Usage</h5>
+                <div class="code-block">await page.getByRole('heading', { name: 'Dashboard' }).click();
+await page.getByRole('heading', { level: 1 }).textContent();</div>
+            </div>
+        </div>
+
+        <h3>Paragraphs and Inline Text</h3>
+        <div class="tag-card">
+            <div class="tag-name">&lt;p&gt;</div>
+            <div class="tag-purpose">Paragraph Block</div>
+            <p><strong>Purpose:</strong> Wraps text as a logical paragraph with margins for visual separation.</p>
+        </div>
+
+        <div class="tag-card">
+            <div class="tag-name">&lt;span&gt;</div>
+            <div class="tag-purpose">Inline Container</div>
+            <p><strong>Purpose:</strong> Generic inline container for styling or JS hooks. No semantic meaning.</p>
+            <p><strong>Legacy Issue:</strong> Often overused for layout instead of semantic tags.</p>
+        </div>
+
+        <h3>Text Formatting</h3>
+        <table>
+            <tr><th>Tag</th><th>Semantic?</th><th>Use Case</th></tr>
+            <tr><td><code>&lt;strong&gt;</code></td><td>Yes - importance</td><td>Warnings, important info</td></tr>
+            <tr><td><code>&lt;b&gt;</code></td><td>No - visual only</td><td>Keywords without importance</td></tr>
+            <tr><td><code>&lt;em&gt;</code></td><td>Yes - emphasis</td><td>Stress emphasis</td></tr>
+            <tr><td><code>&lt;i&gt;</code></td><td>No - visual only</td><td>Technical terms, foreign words</td></tr>
+        </table>
+
+        <h3>Links</h3>
+        <div class="tag-card">
+            <div class="tag-name">&lt;a&gt;</div>
+            <div class="tag-purpose">Anchor/Hyperlink</div>
+            <div class="code-block"><span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"https://example.com"</span> <span class="attr">target</span>=<span class="value">"_blank"</span><span class="tag">&gt;</span>External<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"/dashboard"</span><span class="tag">&gt;</span>Internal<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"#section"</span><span class="tag">&gt;</span>Anchor<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"/file.pdf"</span> <span class="attr">download</span><span class="tag">&gt;</span>Download<span class="tag">&lt;/a&gt;</span></div>
+            <table>
+                <tr><th>Attribute</th><th>Purpose</th><th>Testing Note</th></tr>
+                <tr><td><code>href</code></td><td>URL destination</td><td>Verify navigation</td></tr>
+                <tr><td><code>target="_blank"</code></td><td>New tab</td><td>Handle popup context</td></tr>
+                <tr><td><code>download</code></td><td>File download</td><td>Download testing</td></tr>
+            </table>
+            <div class="pw-tip">
+                <h5>Playwright Usage</h5>
+                <div class="code-block">await page.getByRole('link', { name: 'Dashboard' }).click();
+
+<span class="comment">// Handle new tab</span>
+const [newPage] = await Promise.all([
+    page.waitForEvent('popup'),
+    page.getByRole('link', { name: 'External' }).click()
+]);</div>
+            </div>
+        </div>
+
+        <h3>Lists</h3>
+        <div class="tag-card">
+            <div class="tag-name">&lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;</div>
+            <div class="tag-purpose">List Structures</div>
+            <ul>
+                <li><code>&lt;ul&gt;</code> - Unordered (bullet) list</li>
+                <li><code>&lt;ol&gt;</code> - Ordered (numbered) list</li>
+                <li><code>&lt;li&gt;</code> - List item (must be child of ul/ol)</li>
+            </ul>
+            <div class="pw-tip">
+                <h5>Playwright Usage</h5>
+                <div class="code-block">await page.getByRole('listitem').filter({ hasText: 'Settings' }).click();
+await expect(page.locator('ul li')).toHaveCount(5);</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section id="s3">
+        <h2>3. Semantic Layout Tags (Modern HTML5)</h2>
+        
+        <div class="info-box success">
+            <h5>✨ Why Semantic Tags Matter for Testing</h5>
+            <p>Semantic tags provide meaningful hooks. Instead of <code>div.wrapper > div:nth-child(2)</code>, use <code>main article</code> or role-based selectors.</p>
+        </div>
+
+        <div class="tag-card semantic">
+            <div class="tag-name">&lt;header&gt;</div>
+            <div class="tag-purpose">Page/Section Header • ARIA role: banner</div>
+            <p><strong>Purpose:</strong> Contains introductory content - navigation, logo, search bar.</p>
+            <div class="pw-tip">
+                <h5>Playwright Usage</h5>
+                <div class="code-block">await page.getByRole('banner').locator('nav a').click();</div>
+            </div>
+        </div>
+
+        <div class="tag-card semantic">
+            <div class="tag-name">&lt;nav&gt;</div>
+            <div class="tag-purpose">Navigation Section • ARIA role: navigation</div>
+            <p><strong>Purpose:</strong> Contains navigation links - menu, breadcrumbs, pagination.</p>
+            <div class="code-block"><span class="tag">&lt;nav</span> <span class="attr">aria-label</span>=<span class="value">"Main Navigation"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"/"</span><span class="tag">&gt;</span>Home<span class="tag">&lt;/a&gt;</span>
+  <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="value">"/about"</span><span class="tag">&gt;</span>About<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;/nav&gt;</span></div>
+            <div class="pw-tip">
+                <h5>Playwright Usage</h5>
+                <div class="code-block">await page.getByRole('navigation', { name: 'Main Navigation' })
+    .getByRole('link', { name: 'Home' }).click();</div>
+            </div>
+        </div>
+
+        <div class="tag-card semantic">
+            <div class="tag-name">&lt;main&gt;</div>
+            <div class="tag-purpose">Main Content Area • ARIA role: main</div>
+            <p><strong>Purpose:</strong> Primary unique content. Only one per page.</p>
+            <div class="pw-tip">
+                <h5>Playwright Usage</h5>
+                <div class="code-block"><span class="comment">// Scope to main (avoids header/footer)</span>
+await page.getByRole('main').getByRole('button', { name: 'Submit' }).click();</div>
+            </div>
+        </div>
+
+        <div class="tag-card semantic">
+            <div class="tag-name">&lt;section&gt;</div>
+            <div class="tag-purpose">Thematic Section</div>
+            <p><strong>Purpose:</strong> Thematic grouping with a heading (Features, Pricing, Contact).</p>
+        </div>
+
+        <div class="tag-card semantic">
+            <div class="tag-name">&lt;article&gt;</div>
+            <div class="tag-purpose">Self-Contained Content • ARIA role: article</div>
+            <p><strong>Purpose:</strong> Standalone content (blog post, news, product card).</p>
+        </div>
+
+        <div class="tag-card semantic">
+            <div class="tag-name">&lt;aside&gt;</div>
+            <div class="tag-purpose">Sidebar Content • ARIA role: complementary</div>
+            <p><strong>Purpose:</strong> Tangential content - sidebars, pull quotes, ads.</p>
+        </div>
+
+        <div class="tag-card semantic">
+            <div class="tag-name">&lt;footer&gt;</div>
+            <div class="tag-purpose">Page Footer • ARIA role: contentinfo</div>
+            <p><strong>Purpose:</strong> Footer info - copyright, contact, sitemap links.</p>
+        </div>
+
+        <h3>Visual Representation</h3>
+        <div class="diagram">┌─────────────────────────────────────────────┐
+│  &lt;header&gt;                         [banner]  │
+│    &lt;nav&gt; Home | About | Contact             │
+└─────────────────────────────────────────────┘
+┌─────────────────────────────┬───────────────┐
+│  &lt;main&gt;              [main] │  &lt;aside&gt;      │
+│  ┌───────────────────────┐  │ [complementary]│
+│  │  &lt;section&gt;            │  │               │
+│  │    &lt;article&gt; ...      │  │  Sidebar      │
+│  └───────────────────────┘  │               │
+└─────────────────────────────┴───────────────┘
+┌─────────────────────────────────────────────┐
+│  &lt;footer&gt;                    [contentinfo]  │
+│    © 2024 Company | Privacy | Terms         │
+└─────────────────────────────────────────────┘</div>
+    </section>
+
+    <!-- Section 4 -->
+    <section id="s4">
+        <h2>4. Legacy Layout Patterns</h2>
+        
+        <div class="info-box warning">
+            <h5>⚠️ Legacy Pattern Recognition</h5>
+            <p>Common in pre-HTML5 apps. Not "wrong" but offer less semantic meaning for testing.</p>
+        </div>
+
+        <div class="tag-card legacy">
+            <div class="tag-name">&lt;div&gt;</div>
+            <div class="tag-purpose">Generic Block Container</div>
+            <span class="badge badge-legacy">Legacy Heavy</span>
+            <p><strong>Problem:</strong> "Div soup" - nested divs for all layout instead of semantic tags.</p>
+            <div class="code-block"><span class="comment">&lt;!-- Legacy "Div Soup" --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"header"</span><span class="tag">&gt;&lt;div</span> <span class="attr">class</span>=<span class="value">"nav"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/div&gt;&lt;/div&gt;</span>
+
+<span class="comment">&lt;!-- Modern --&gt;</span>
+<span class="tag">&lt;header&gt;&lt;nav&gt;</span>...<span class="tag">&lt;/nav&gt;&lt;/header&gt;</span></div>
+            <div class="pw-tip">
+                <h5>Strategy for Div Soup</h5>
+                <div class="code-block"><span class="comment">// Rely on classes</span>
+await page.locator('div.nav-item').filter({ hasText: 'Home' }).click();
+
+<span class="comment">// Or test IDs</span>
+await page.locator('[data-testid="nav-home"]').click();</div>
+            </div>
+        </div>
+
+        <div class="tag-card legacy">
+            <div class="tag-name">&lt;iframe&gt;</div>
+            <div class="tag-purpose">Inline Frame</div>
+            <span class="badge badge-legacy">Still Used</span>
+            <p><strong>Uses:</strong> Third-party embeds (YouTube, maps), payment forms (PCI), ads.</p>
+            <div class="pw-tip">
+                <h5>Playwright Strategy</h5>
+                <div class="code-block">const frame = page.frameLocator('iframe[name="payment"]');
+await frame.locator('#card-number').fill('4111111111111111');</div>
+            </div>
+        </div>
+
+        <h3>Legacy vs Modern Quick Reference</h3>
+        <table>
+            <tr><th>Legacy</th><th>Modern</th><th>Playwright</th></tr>
+            <tr><td><code>div.header</code></td><td><code>&lt;header&gt;</code></td><td><code>getByRole('banner')</code></td></tr>
+            <tr><td><code>div.nav</code></td><td><code>&lt;nav&gt;</code></td><td><code>getByRole('navigation')</code></td></tr>
+            <tr><td><code>div.main</code></td><td><code>&lt;main&gt;</code></td><td><code>getByRole('main')</code></td></tr>
+            <tr><td><code>div.footer</code></td><td><code>&lt;footer&gt;</code></td><td><code>getByRole('contentinfo')</code></td></tr>
+            <tr><td><code>div onclick</code></td><td><code>&lt;button&gt;</code></td><td><code>getByRole('button')</code></td></tr>
+        </table>
+    </section>
+
+    <!-- Section 5 -->
+    <section id="s5">
+        <h2>5. Form Elements & Input Types</h2>
+        
+        <div class="tag-card">
+            <div class="tag-name">&lt;form&gt;</div>
+            <div class="tag-purpose">Form Container</div>
+            <div class="code-block"><span class="tag">&lt;form</span> <span class="attr">action</span>=<span class="value">"/api/submit"</span> <span class="attr">method</span>=<span class="value">"POST"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/form&gt;</span></div>
+            <table>
+                <tr><th>Attribute</th><th>Purpose</th></tr>
+                <tr><td><code>action</code></td><td>URL to submit data to</td></tr>
+                <tr><td><code>method</code></td><td>HTTP method (GET/POST)</td></tr>
+                <tr><td><code>novalidate</code></td><td>Disable browser validation</td></tr>
+            </table>
+        </div>
+
+        <div class="tag-card">
+            <div class="tag-name">&lt;input&gt;</div>
+            <div class="tag-purpose">User Input Field</div>
+            <div class="code-block"><span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="value">"text"</span> <span class="attr">name</span>=<span class="value">"username"</span> <span class="attr">placeholder</span>=<span class="value">"Username"</span> <span class="attr">required</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="value">"password"</span> <span class="attr">name</span>=<span class="value">"password"</span> <span class="attr">minlength</span>=<span class="value">"8"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="value">"email"</span> <span class="attr">name</span>=<span class="value">"email"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="value">"number"</span> <span class="attr">min</span>=<span class="value">"0"</span> <span class="attr">max</span>=<span class="value">"100"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="value">"date"</span> <span class="attr">name</span>=<span class="value">"dob"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="value">"checkbox"</span> <span class="attr">id</span>=<span class="value">"agree"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="value">"radio"</span> <span class="attr">name</span>=<span class="value">"gender"</span> <span class="attr">value</span>=<span class="value">"male"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="value">"file"</span> <span class="attr">accept</span>=<span class="value">".pdf,.doc"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="value">"hidden"</span> <span class="attr">name</span>=<span class="value">"csrf"</span> <span class="attr">value</span>=<span class="value">"token"</span><span class="tag">/&gt;</span></div>
+            <h4>Input Types Reference:</h4>
+            <table>
+                <tr><th>Type</th><th>Purpose</th><th>Playwright Method</th></tr>
+                <tr><td>text</td><td>General text</td><td><code>fill()</code></td></tr>
+                <tr><td>password</td><td>Masked text</td><td><code>fill()</code></td></tr>
+                <tr><td>email</td><td>Email with validation</td><td><code>fill()</code></td></tr>
+                <tr><td>number</td><td>Numeric input</td><td><code>fill()</code></td></tr>
+                <tr><td>date</td><td>Date picker</td><td><code>fill('2024-01-15')</code></td></tr>
+                <tr><td>checkbox</td><td>Toggle option</td><td><code>check()</code>, <code>uncheck()</code></td></tr>
+                <tr><td>radio</td><td>Single choice</td><td><code>check()</code></td></tr>
+                <tr><td>file</td><td>File upload</td><td><code>setInputFiles()</code></td></tr>
+            </table>
+            <div class="pw-tip">
+                <h5>Playwright Usage</h5>
+                <div class="code-block"><span class="comment">// By label (preferred)</span>
+await page.getByLabel('Email').fill('test@example.com');
+
+<span class="comment">// By placeholder</span>
+await page.getByPlaceholder('Username').fill('john');
+
+<span class="comment">// By role</span>
+await page.getByRole('checkbox', { name: 'I agree' }).check();
+
+<span class="comment">// File upload</span>
+await page.getByLabel('Upload').setInputFiles('file.pdf');</div>
+            </div>
+        </div>
+
+        <div class="tag-card">
+            <div class="tag-name">&lt;label&gt;</div>
+            <div class="tag-purpose">Form Control Label</div>
+            <span class="badge badge-semantic">Accessibility Critical</span>
+            <div class="code-block"><span class="comment">&lt;!-- Method 1: 'for' attribute (Recommended) --&gt;</span>
+<span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="value">"email"</span><span class="tag">&gt;</span>Email<span class="tag">&lt;/label&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">id</span>=<span class="value">"email"</span> <span class="attr">type</span>=<span class="value">"email"</span><span class="tag">/&gt;</span>
+
+<span class="comment">&lt;!-- Method 2: Wrapping --&gt;</span>
+<span class="tag">&lt;label&gt;</span>Email <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="value">"email"</span><span class="tag">/&gt;&lt;/label&gt;</span></div>
+            <div class="info-box warning">
+                <h5>⚠️ Missing Labels = Testing Issues</h5>
+                <p>Inputs without labels can't use <code>getByLabel()</code>. Also indicates accessibility problems.</p>
+            </div>
+        </div>
+
+        <div class="tag-card">
+            <div class="tag-name">&lt;select&gt; &amp; &lt;option&gt;</div>
+            <div class="tag-purpose">Dropdown Selection</div>
+            <div class="code-block"><span class="tag">&lt;select</span> <span class="attr">id</span>=<span class="value">"country"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="value">""</span><span class="tag">&gt;</span>Select...<span class="tag">&lt;/option&gt;</span>
+  <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="value">"us"</span><span class="tag">&gt;</span>United States<span class="tag">&lt;/option&gt;</span>
+  <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="value">"in"</span><span class="tag">&gt;</span>India<span class="tag">&lt;/option&gt;</span>
+<span class="tag">&lt;/select&gt;</span></div>
+            <div class="pw-tip">
+                <h5>Playwright Usage</h5>
+                <div class="code-block">await page.getByLabel('Country').selectOption('India'); <span class="comment">// by text</span>
+await page.locator('#country').selectOption('in'); <span class="comment">// by value</span></div>
+            </div>
+        </div>
+
+        <div class="tag-card">
+            <div class="tag-name">&lt;textarea&gt;</div>
+            <div class="tag-purpose">Multi-line Text</div>
+            <div class="code-block"><span class="tag">&lt;textarea</span> <span class="attr">rows</span>=<span class="value">"5"</span> <span class="attr">maxlength</span>=<span class="value">"500"</span><span class="tag">&gt;&lt;/textarea&gt;</span></div>
+        </div>
+
+        <div class="tag-card">
+            <div class="tag-name">&lt;button&gt;</div>
+            <div class="tag-purpose">Clickable Button</div>
+            <div class="code-block"><span class="tag">&lt;button</span> <span class="attr">type</span>=<span class="value">"submit"</span><span class="tag">&gt;</span>Submit<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">type</span>=<span class="value">"button"</span><span class="tag">&gt;</span>Action<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">type</span>=<span class="value">"reset"</span><span class="tag">&gt;</span>Clear<span class="tag">&lt;/button&gt;</span></div>
+            <div class="pw-tip">
+                <h5>Playwright Usage</h5>
+                <div class="code-block">await page.getByRole('button', { name: 'Submit' }).click();</div>
+            </div>
+        </div>
+
+        <div class="checklist">
+            <h5>Form Testing Checklist</h5>
+            <ul>
+                <li>All inputs have associated labels</li>
+                <li>Required fields marked with 'required'</li>
+                <li>Validation messages display correctly</li>
+                <li>Tab order follows logical flow</li>
+                <li>Submit button has type="submit"</li>
+                <li>File inputs have proper 'accept' attributes</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Section 6 -->
+    <section id="s6">
+        <h2>6. Tables & Data Display</h2>
+        
+        <div class="tag-card">
+            <div class="tag-name">&lt;table&gt; Structure</div>
+            <div class="tag-purpose">Tabular Data</div>
+            <div class="code-block"><span class="tag">&lt;table&gt;</span>
+  <span class="tag">&lt;caption&gt;</span>Sales Report<span class="tag">&lt;/caption&gt;</span>
+  <span class="tag">&lt;thead&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>
+      <span class="tag">&lt;th</span> <span class="attr">scope</span>=<span class="value">"col"</span><span class="tag">&gt;</span>Product<span class="tag">&lt;/th&gt;</span>
+      <span class="tag">&lt;th</span> <span class="attr">scope</span>=<span class="value">"col"</span><span class="tag">&gt;</span>Sales<span class="tag">&lt;/th&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+  <span class="tag">&lt;/thead&gt;</span>
+  <span class="tag">&lt;tbody&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>
+      <span class="tag">&lt;td&gt;</span>Widget A<span class="tag">&lt;/td&gt;</span>
+      <span class="tag">&lt;td&gt;</span>$10,000<span class="tag">&lt;/td&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+  <span class="tag">&lt;/tbody&gt;</span>
+<span class="tag">&lt;/table&gt;</span></div>
+            <h4>Table Elements:</h4>
+            <table>
+                <tr><th>Element</th><th>Purpose</th><th>Playwright</th></tr>
+                <tr><td><code>&lt;table&gt;</code></td><td>Container</td><td><code>getByRole('table')</code></td></tr>
+                <tr><td><code>&lt;caption&gt;</code></td><td>Title</td><td>Identify by name</td></tr>
+                <tr><td><code>&lt;thead&gt;</code></td><td>Header rows</td><td>Column headers</td></tr>
+                <tr><td><code>&lt;tbody&gt;</code></td><td>Body rows</td><td>Data rows</td></tr>
+                <tr><td><code>&lt;tr&gt;</code></td><td>Table row</td><td><code>getByRole('row')</code></td></tr>
+                <tr><td><code>&lt;th&gt;</code></td><td>Header cell</td><td><code>getByRole('columnheader')</code></td></tr>
+                <tr><td><code>&lt;td&gt;</code></td><td>Data cell</td><td><code>getByRole('cell')</code></td></tr>
+            </table>
+            <div class="pw-tip">
+                <h5>Playwright Usage</h5>
+                <div class="code-block">const table = page.getByRole('table', { name: 'Sales Report' });
+const row = table.getByRole('row', { name: /Widget A/ });
+await expect(row.getByRole('cell').nth(1)).toHaveText('$10,000');
+await expect(table.locator('tbody tr')).toHaveCount(5);</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7 -->
+    <section id="s7">
+        <h2>7. Media & Embedded Content</h2>
+        
+        <div class="tag-card">
+            <div class="tag-name">&lt;img&gt;</div>
+            <div class="tag-purpose">Image Element</div>
+            <div class="code-block"><span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="value">"product.jpg"</span> <span class="attr">alt</span>=<span class="value">"Red shoes"</span> <span class="attr">width</span>=<span class="value">"400"</span> <span class="attr">loading</span>=<span class="value">"lazy"</span><span class="tag">/&gt;</span></div>
+            <table>
+                <tr><th>Attribute</th><th>Purpose</th><th>Testing Note</th></tr>
+                <tr><td><code>src</code></td><td>Image URL</td><td>Verify loads (no 404)</td></tr>
+                <tr><td><code>alt</code></td><td>Alternative text</td><td>Use for locators</td></tr>
+                <tr><td><code>loading="lazy"</code></td><td>Lazy load</td><td>Scroll into view first</td></tr>
+            </table>
+            <div class="pw-tip">
+                <h5>Playwright Usage</h5>
+                <div class="code-block">await page.getByRole('img', { name: 'Red shoes' }).click();
+<span class="comment">// Verify loaded</span>
+const img = page.getByAltText('Product');
+const width = await img.evaluate(el => el.naturalWidth);
+expect(width).toBeGreaterThan(0);</div>
+            </div>
+        </div>
+
+        <div class="tag-card">
+            <div class="tag-name">&lt;video&gt; &amp; &lt;audio&gt;</div>
+            <div class="tag-purpose">Media Players</div>
+            <div class="code-block"><span class="tag">&lt;video</span> <span class="attr">src</span>=<span class="value">"demo.mp4"</span> <span class="attr">controls</span> <span class="attr">poster</span>=<span class="value">"thumb.jpg"</span><span class="tag">&gt;&lt;/video&gt;</span>
+<span class="tag">&lt;audio</span> <span class="attr">src</span>=<span class="value">"podcast.mp3"</span> <span class="attr">controls</span><span class="tag">&gt;&lt;/audio&gt;</span></div>
+            <div class="pw-tip">
+                <h5>Playwright Usage</h5>
+                <div class="code-block">const video = page.locator('video');
+await video.evaluate(v => v.play());
+await video.evaluate(v => v.pause());</div>
+            </div>
+        </div>
+
+        <div class="tag-card">
+            <div class="tag-name">&lt;svg&gt;</div>
+            <div class="tag-purpose">Vector Graphics</div>
+            <p><strong>Common use:</strong> Icons, logos. When inside buttons, target the button, not the SVG.</p>
+            <div class="code-block"><span class="tag">&lt;button</span> <span class="attr">aria-label</span>=<span class="value">"Close"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;svg</span> <span class="attr">aria-hidden</span>=<span class="value">"true"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/svg&gt;</span>
+<span class="tag">&lt;/button&gt;</span></div>
+        </div>
+    </section>
+
+    <!-- Section 8 -->
+    <section id="s8">
+        <h2>8. Interactive & Dynamic Elements</h2>
+        
+        <div class="tag-card modern">
+            <div class="tag-name">&lt;dialog&gt;</div>
+            <div class="tag-purpose">Modal Dialog</div>
+            <span class="badge badge-modern">HTML5</span>
+            <div class="code-block"><span class="tag">&lt;dialog</span> <span class="attr">id</span>=<span class="value">"confirm"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;h2&gt;</span>Confirm?<span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">onclick</span>=<span class="value">"dialog.close()"</span><span class="tag">&gt;</span>Yes<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/dialog&gt;</span></div>
+            <div class="pw-tip">
+                <h5>Playwright Usage</h5>
+                <div class="code-block">await expect(page.getByRole('dialog')).toBeVisible();
+await page.getByRole('dialog').getByRole('button', { name: 'Yes' }).click();</div>
+            </div>
+        </div>
+
+        <div class="tag-card modern">
+            <div class="tag-name">&lt;details&gt; &amp; &lt;summary&gt;</div>
+            <div class="tag-purpose">Collapsible Content</div>
+            <span class="badge badge-modern">HTML5</span>
+            <div class="code-block"><span class="tag">&lt;details&gt;</span>
+  <span class="tag">&lt;summary&gt;</span>Click for more<span class="tag">&lt;/summary&gt;</span>
+  <span class="tag">&lt;p&gt;</span>Hidden content<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/details&gt;</span></div>
+            <div class="pw-tip">
+                <h5>Playwright Usage</h5>
+                <div class="code-block">await page.locator('summary').filter({ hasText: 'Click for more' }).click();
+await expect(page.getByText('Hidden content')).toBeVisible();</div>
+            </div>
+        </div>
+
+        <div class="tag-card modern">
+            <div class="tag-name">&lt;progress&gt; &amp; &lt;meter&gt;</div>
+            <div class="tag-purpose">Progress Indicators</div>
+            <div class="code-block"><span class="tag">&lt;progress</span> <span class="attr">value</span>=<span class="value">"70"</span> <span class="attr">max</span>=<span class="value">"100"</span><span class="tag">&gt;</span>70%<span class="tag">&lt;/progress&gt;</span>
+<span class="tag">&lt;meter</span> <span class="attr">value</span>=<span class="value">"0.8"</span> <span class="attr">min</span>=<span class="value">"0"</span> <span class="attr">max</span>=<span class="value">"1"</span><span class="tag">&gt;</span>80%<span class="tag">&lt;/meter&gt;</span></div>
+            <div class="pw-tip">
+                <h5>Playwright Usage</h5>
+                <div class="code-block">await expect(page.locator('progress')).toHaveAttribute('value', '100');</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 9 -->
+    <section id="s9">
+        <h2>9. Essential Attributes for Testing</h2>
+        
+        <h3>Identification Attributes</h3>
+        <table>
+            <tr><th>Attribute</th><th>Purpose</th><th>Uniqueness</th><th>Priority</th></tr>
+            <tr><td><code>id</code></td><td>Unique identifier</td><td>Must be unique</td><td>High (if stable)</td></tr>
+            <tr><td><code>data-testid</code></td><td>Testing hook</td><td>Should be unique</td><td>Highest</td></tr>
+            <tr><td><code>name</code></td><td>Form field name</td><td>Unique in form</td><td>Medium</td></tr>
+            <tr><td><code>class</code></td><td>CSS styling</td><td>Not unique</td><td>Low (changes often)</td></tr>
+        </table>
+
+        <h3>ARIA Attributes for Accessibility</h3>
+        <div class="tag-card semantic">
+            <div class="code-block"><span class="comment">&lt;!-- aria-label: Accessible name --&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">aria-label</span>=<span class="value">"Close"</span><span class="tag">&gt;</span>×<span class="tag">&lt;/button&gt;</span>
+
+<span class="comment">&lt;!-- aria-labelledby: Reference another element --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">role</span>=<span class="value">"dialog"</span> <span class="attr">aria-labelledby</span>=<span class="value">"title"</span><span class="tag">&gt;</span>
+
+<span class="comment">&lt;!-- aria-expanded: Expandable state --&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">aria-expanded</span>=<span class="value">"false"</span><span class="tag">&gt;</span>Menu<span class="tag">&lt;/button&gt;</span>
+
+<span class="comment">&lt;!-- aria-hidden: Hide from screen readers --&gt;</span>
+<span class="tag">&lt;svg</span> <span class="attr">aria-hidden</span>=<span class="value">"true"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/svg&gt;</span>
+
+<span class="comment">&lt;!-- role: Define element's role --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">role</span>=<span class="value">"alert"</span><span class="tag">&gt;</span>Error!<span class="tag">&lt;/div&gt;</span></div>
+            <div class="pw-tip">
+                <h5>Playwright ARIA Usage</h5>
+                <div class="code-block">await page.getByLabel('Close').click();
+await page.getByRole('dialog', { name: 'Settings' }).locator('button').click();
+await expect(page.locator('button')).toHaveAttribute('aria-expanded', 'true');
+await page.getByRole('alert').toHaveText('Error!');</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 10 -->
+    <section id="s10">
+        <h2>10. Playwright Locator Strategies</h2>
+        
+        <h3>Locator Priority (Best to Worst)</h3>
+        <table>
+            <tr><th>#</th><th>Method</th><th>Example</th><th>Why</th></tr>
+            <tr><td>1</td><td><code>getByRole()</code></td><td><code>getByRole('button', { name: 'Submit' })</code></td><td>Semantic, accessible</td></tr>
+            <tr><td>2</td><td><code>getByLabel()</code></td><td><code>getByLabel('Email')</code></td><td>Works with labels</td></tr>
+            <tr><td>3</td><td><code>getByPlaceholder()</code></td><td><code>getByPlaceholder('Search')</code></td><td>When no labels</td></tr>
+            <tr><td>4</td><td><code>getByText()</code></td><td><code>getByText('Welcome')</code></td><td>Visible content</td></tr>
+            <tr><td>5</td><td><code>getByTestId()</code></td><td><code>getByTestId('submit-btn')</code></td><td>Dedicated attribute</td></tr>
+            <tr><td>6</td><td><code>locator()</code></td><td><code>locator('#id')</code></td><td>Last resort</td></tr>
+        </table>
+
+        <h3>Role Reference</h3>
+        <table>
+            <tr><th>Element</th><th>Role</th><th>Playwright</th></tr>
+            <tr><td><code>&lt;button&gt;</code></td><td>button</td><td><code>getByRole('button')</code></td></tr>
+            <tr><td><code>&lt;a href&gt;</code></td><td>link</td><td><code>getByRole('link')</code></td></tr>
+            <tr><td><code>&lt;input text&gt;</code></td><td>textbox</td><td><code>getByRole('textbox')</code></td></tr>
+            <tr><td><code>&lt;input checkbox&gt;</code></td><td>checkbox</td><td><code>getByRole('checkbox')</code></td></tr>
+            <tr><td><code>&lt;select&gt;</code></td><td>combobox</td><td><code>getByRole('combobox')</code></td></tr>
+            <tr><td><code>&lt;table&gt;</code></td><td>table</td><td><code>getByRole('table')</code></td></tr>
+            <tr><td><code>&lt;header&gt;</code></td><td>banner</td><td><code>getByRole('banner')</code></td></tr>
+            <tr><td><code>&lt;nav&gt;</code></td><td>navigation</td><td><code>getByRole('navigation')</code></td></tr>
+            <tr><td><code>&lt;main&gt;</code></td><td>main</td><td><code>getByRole('main')</code></td></tr>
+            <tr><td><code>&lt;footer&gt;</code></td><td>contentinfo</td><td><code>getByRole('contentinfo')</code></td></tr>
+            <tr><td><code>&lt;h1-h6&gt;</code></td><td>heading</td><td><code>getByRole('heading', { level: 1 })</code></td></tr>
+        </table>
+    </section>
+
+    <!-- Section 11 -->
+    <section id="s11">
+        <h2>11. Influencing Design & Development Decisions</h2>
+        
+        <p>As a QA engineer, you can advocate for better HTML that improves accessibility AND testability.</p>
+
+        <h3>Key Discussion Points</h3>
+
+        <div class="discuss">
+            <h5>1. Request Semantic Elements</h5>
+            <p><strong>Instead of:</strong> "This is hard to test"</p>
+            <p><strong>Say:</strong> "If we use <code>&lt;button&gt;</code> instead of <code>&lt;div onclick&gt;</code>, screen readers work AND our tests are more stable."</p>
+        </div>
+
+        <div class="discuss">
+            <h5>2. Advocate for Proper Labels</h5>
+            <p><strong>Instead of:</strong> "I can't find this input"</p>
+            <p><strong>Say:</strong> "Adding <code>&lt;label for="email"&gt;</code> lets us use <code>getByLabel()</code> AND improves accessibility."</p>
+        </div>
+
+        <div class="discuss">
+            <h5>3. Suggest Test IDs When Needed</h5>
+            <p><strong>Instead of:</strong> "No stable selector"</p>
+            <p><strong>Say:</strong> "Can we add <code>data-testid</code> here? It won't affect styling but gives us a stable hook."</p>
+        </div>
+
+        <div class="discuss">
+            <h5>4. Frame Accessibility as Testing Issues</h5>
+            <p><strong>Instead of:</strong> "Playwright can't find this"</p>
+            <p><strong>Say:</strong> "This element has no role or accessible name. That's both an accessibility bug AND makes it untestable."</p>
+        </div>
+
+        <h3>Pre-Development Checklist</h3>
+        <div class="checklist">
+            <h5>HTML Review Checklist</h5>
+            <ul>
+                <li>Semantic elements used (header, nav, main, section)?</li>
+                <li>Interactive elements have roles (button, link)?</li>
+                <li>Form inputs properly labeled?</li>
+                <li>Images have meaningful alt text?</li>
+                <li>Headings are hierarchical (h1 → h2 → h3)?</li>
+                <li>Modals use dialog semantics?</li>
+                <li>Custom components have ARIA?</li>
+                <li>data-testid planned for dynamic content?</li>
+            </ul>
+        </div>
+
+        <div class="info-box success">
+            <h5>✅ Benefits of Good HTML</h5>
+            <ul>
+                <li><strong>Faster test writing:</strong> Semantic selectors are self-documenting</li>
+                <li><strong>Stable tests:</strong> Role-based selectors survive CSS changes</li>
+                <li><strong>Accessibility:</strong> Meets WCAG compliance</li>
+                <li><strong>Easier debugging:</strong> Clear structure = obvious issues</li>
+                <li><strong>Future-proof:</strong> Works with new tools and browsers</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <p><strong>HTML Tags Training Guide for Test Automation Engineers</strong></p>
+        <p>Created for Playwright Training Curriculum</p>
+        <p>© 2024 - For Internal Training Use</p>
+    </footer>
+</div>
+</body>
+</html>
